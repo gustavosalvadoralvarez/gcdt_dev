@@ -1,0 +1,61 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h1#title {
+	position: fixed;
+	z-index: 3;
+	color: white;
+	top: 100px;
+}
+
+h1#title p {
+	color: #ffffff;
+	font-weight: bolder;
+	font-size: xx-large;
+}
+
+
+form#main input[type="text"] {
+	position: relative;
+	z-index: 3;
+	width: 80%;
+	display:block;
+
+}
+
+form#main input[type="submit"] {
+	position: relative;
+	z-index: 3;
+	width: 10%;
+	display: block;
+
+}
+
+div#veil {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 2;
+	display: block;
+}
+
+#video {
+	position: fixed;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+	height: auto;
+	width: auto;
+	background-size: cover;
+	z-index: 1;
+}
