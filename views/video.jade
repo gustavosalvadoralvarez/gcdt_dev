@@ -1,0 +1,6 @@
+extends layout
+
+block content
+ h1= title
+  video#vid0(autoplay)
+   source(src="#{path}", type="video/mp4", codecs="avc1.42E01E, mp4a.40.2")
