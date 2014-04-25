@@ -36,7 +36,8 @@ exports.scraper = function (req, res) {
 							return re.test(url);
 						};
 						$('link[rel="stylesheet"]').each(function(){
-							var current = this.attr('href');
+							console.log(this.toString());
+							var current = $(this).attr('href');
 							console.log(testForAbsolute(current));
 							if (testForAbsolute(current) === false){
 								var fixed = addition + current;
@@ -44,10 +45,10 @@ exports.scraper = function (req, res) {
 							} 
 						});
 						$('script').each(function(){
-							var current = this.attr('src');
+							var current = $(this).attr('src');
 							if (testForAbsolute(current) === false){
 								var fixed = addition + current;
-								this.attr('src', fixed);
+								$(this).attr('src', fixed);
 							}
 						});
 						var clientScript = '<script src="javascripts/destabalize.js" type="text/javascript" ></script>';
