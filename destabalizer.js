@@ -2,7 +2,7 @@ var request = require('request');
 var cheerio = require('cheerio'); 
 var fs = require('fs');
 var async = require('async'); 
-
+var url = require('url');
 
 exports.scraper = function (req, res) {
 	console.log('Scraper instance initi for ' + req.params.addr)
@@ -30,10 +30,13 @@ exports.scraper = function (req, res) {
 						return callback(err);
 					} else if (res.statusCode == 200) {
 						var $ = cheerio.load(body),
-							addition = 'http://' + req.body.addr.split('/')[0];
+							parsed = url.parse(locals.url),
+							addition = parsed.protocol + '//' + parsed.host;
 						function testForAbsolute (url) {
-							var re = /\/\//;
-							return re.test(url);
+							var re0 = /\/\//,
+							    re1 = /http/;
+							console.log(url);
+							return re0.test(url) || re1.test(url);
 						};
 						$('link[rel="stylesheet"]').each(function(){
 							console.log(this.toString());
@@ -41,7 +44,7 @@ exports.scraper = function (req, res) {
 							console.log(testForAbsolute(current));
 							if (testForAbsolute(current) === false){
 								var fixed = addition + current;
-								this.attr('href', fixed);
+								$(this).attr('href', fixed);
 							} 
 						});
 						$('script').each(function(){
@@ -51,8 +54,15 @@ exports.scraper = function (req, res) {
 								$(this).attr('src', fixed);
 							}
 						});
+						$('img').each(function(){
+							var current = $(this).attr('src');
+							if (testForAbsolute(current) === false){
+								var fixed = addition + current;
+								$(this).attr('src', fixed);
+							}
+						});
 						var clientScript = '<script src="javascripts/destabalize.js" type="text/javascript" ></script>';
-						$('body').append(clientScript);
+						//$('body').append(clientScript);
 						locals.requestHtml = $.html();
 						return callback();
 					} else {
